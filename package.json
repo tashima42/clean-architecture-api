@@ -1,0 +1,50 @@
+{
+  "name": "linkapi-teste",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/index.js",
+    "build": "babel src -d dist",
+    "test": "npm run test:unit && npm run test:int",
+    "test:unit": "NODE_PATH=. NODE_ENV=test mocha --require @babel/register --opts test/mocha.opts.unit",
+    "test:int": "NODE_PATH=. NODE_ENV=test mocha --require @babel/register --opts test/mocha.opts.int",
+    "coverage": "NODE_PATH=. NODE_ENV=test nyc mocha --require @babel/register --opts test/mocha.opts.unit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tashima42/linkapi-teste.git"
+  },
+  "author": "tashima42",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tashima42/linkapi-teste/issues"
+  },
+  "homepage": "https://github.com/Tashima42/linkapi-teste#readme",
+  "dependencies": {
+    "@babel/core": "^7.14.0",
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-cors": "^0.0.16",
+    "koa-respond": "^2.1.0",
+    "luxon": "^1.26.0",
+    "mocha": "^8.3.2",
+    "mongodb": "^3.6.6",
+    "mongoose": "^5.12.7"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.16",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.14.0",
+    "@babel/register": "^7.13.16",
+    "cz-conventional-changelog": "^3.3.0",
+    "nodemon": "^2.0.7"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
