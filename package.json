@@ -2,9 +2,9 @@
   "name": "linkapi-teste",
   "version": "1.0.0",
   "description": "",
-  "main": "src/app.js",
+  "main": "src/server.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/index.js",
+    "dev": "nodemon --exec babel-node src/server.js",
     "build": "babel src -d dist",
     "test": "npm run test:unit && npm run test:int",
     "test:unit": "NODE_PATH=. NODE_ENV=test mocha --require @babel/register --opts test/mocha.opts.unit",
