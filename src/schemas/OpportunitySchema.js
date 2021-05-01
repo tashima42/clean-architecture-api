@@ -1,6 +1,4 @@
 import { Schema, model } from 'mongoose'
-import ItemSchema from "./ItemSchema"
-import InstallmentSchema from "./InstallmentSchema"
 
 const OpportunitySchema = new Schema(
   {
@@ -10,19 +8,32 @@ const OpportunitySchema = new Schema(
         required: true
       }
     },
-    itens: {
-      type: [ItemSchema],
-      required: true
-    },
-    installments: {
-      type: [InstallmentSchema],
-      required: true
-    }
+    itens: [{
+      description: {
+        type: String,
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+      },
+      unitaryValue: {
+        type: Number,
+        required: true,
+      },
+      code: {
+        type: String,
+        required: true
+      }
+    }],
+    installments: [{
+      value: {
+        type: Number,
+        required: true
+      }
+    }]
   },
   { timestamps: true }
 )
 
-export const OpportunityDocument = model(
-  'opportunities',
-  OpportunitySchema
-)
+export const OpportunityDocument = model('opportunity', OpportunitySchema)
