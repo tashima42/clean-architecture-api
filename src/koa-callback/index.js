@@ -20,5 +20,8 @@ export default function makeKoaCallback(controller) {
         ctx.response.type('json')
         ctx.response.status(httpResponse.statusCode).body(httpResponse.body)
       })
+      .catch(() => {
+        ctx.response.status(500).send({ error: 'Internal server error' })
+      })
   }
 }
