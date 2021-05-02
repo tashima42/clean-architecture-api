@@ -1,5 +1,5 @@
 export default function makeKoaCallback(controller) {
-  return (ctx) => {
+  return async function (ctx) {
     const httpRequest = {
       body: ctx.body,
       query: ctx.query,
@@ -12,16 +12,17 @@ export default function makeKoaCallback(controller) {
         'User-Agent': ctx.request.get('User-Agent'),
       }
     }
-    controller(httpRequest)
-      .then(httpResponse => {
-        if (httpResponse.headers) {
-          ctx.set(httpResponse.headers)
-        }
-        ctx.response.type('json')
-        ctx.response.status(httpResponse.statusCode).body(httpResponse.body)
-      })
-      .catch(() => {
-        ctx.response.status(500).send({ error: 'Internal server error' })
-      })
+    const httpResponse = await controller(httpRequest)
+    try {
+      if (httpResponse.headers) {
+        ctx.set(httpResponse.headers)
+      }
+      ctx.type = 'json'
+      ctx.status = httpResponse.statusCode
+      ctx.body = httpResponse.body
+    } catch (error) {
+      ctx.satus = 500
+      ctx.body = { error: 'Internal server error' }
+    }
   }
 }
