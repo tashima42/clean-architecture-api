@@ -10,7 +10,7 @@ export default function makeAddOpportunities({ createOpportunity }) {
       console.error(error)
       return {
         statusCode: 500,
-        body: { error: error.message }
+        body: { error }
       }
     }
   }

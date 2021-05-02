@@ -3,12 +3,9 @@ import { BlingProvider, PipedriveProvider } from "../providers/index"
 import objectToXml from "../utils/objectToXml"
 
 import makeCreateOpportunity from "./createOpportunity"
+import makeGetOpportunitiesByDay from "./getOpportunitiesByDay"
 
 const createOpportunity = makeCreateOpportunity({ OpportunityRepository, DayOpportunityRepository, BlingProvider, PipedriveProvider, objectToXml })
+const getOpportunitiesByDay = makeGetOpportunitiesByDay({ DayOpportunityRepository })
 
-const opportunityService = Object.freeze({
-  createOpportunity
-})
-
-export default opportunityService
-export { createOpportunity }
+export { createOpportunity, getOpportunitiesByDay }

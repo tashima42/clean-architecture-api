@@ -3,12 +3,13 @@ import Router from "koa-router"
 import bodyParser from "koa-bodyparser"
 import cors from "koa-cors"
 import makeCallback from "./koaCallback"
-import { addOpportunities } from "./controllers/index"
+import { addOpportunities, listDayOpportunities } from "./controllers/index"
 
 const app = new Koa()
 const router = Router()
 
-router.post("/integrations/opportunities", makeCallback(addOpportunities))
+router.post("/opportunities/integrations", makeCallback(addOpportunities))
+router.get("/opportunities/day", makeCallback(listDayOpportunities))
 
 app
   .use(bodyParser())
