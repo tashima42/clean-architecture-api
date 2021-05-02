@@ -16,7 +16,7 @@ export default function buildPipedriveProvider({ issueHttpRequest }) {
       if (response.data.success != true) {
         throw new Error({ error: response.data.error, errorCode: response.data.errorCode })
       }
-      return response.data
+      return response.data.data
     } catch (error) {
       console.error(error)
       throw new Error(error)

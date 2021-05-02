@@ -3,10 +3,10 @@ import { makeOpportunity, makeDayOpportunity } from "../entities/index"
 export default function makeCreateOpportunity({ OpportunityRepository, DayOpportunityRepository, BlingProvider, PipedriveProvider, objectToXml }) {
   return async function createOpportunity() {
     try {
-      const { data } = await PipedriveProvider.getWonDeals()
+      const deals = await PipedriveProvider.getWonDeals()
       let addedOpportunities = []
-      for (let i = 0; i < data.length; i++) {
-        const deal = data[i]
+      for (let i = 0; i < deals.length; i++) {
+        const deal = deals[i]
         const opportunityInfo = dealToOpportunity(deal)
 
         const find = await OpportunityRepository.findByProperties({ pipedriveId: opportunityInfo.pipedriveId })
@@ -22,41 +22,53 @@ export default function makeCreateOpportunity({ OpportunityRepository, DayOpport
         })
         addedOpportunities.push(addedOpportunity)
 
-        let dayOpportunitiyProperties = {
-          opportunityId: addedOpportunity._id.toString(),
-          date: new Date(addedOpportunity.date),
-          totalValue: addedOpportunity.itens[0].unitaryValue * addedOpportunity.itens[0].quantity // TODO: add multiple itens support
-        }
-        let dayOpportunitiy
+        await addOrUpdateDayOpportunity(addedOpportunity)
 
-        let findDayOpportunity = await DayOpportunityRepository.findByDay(new Date(addedOpportunity.date))
-        if (findDayOpportunity) {
-          findDayOpportunity = findDayOpportunity[0]
-          dayOpportunitiyProperties.totalValue = dayOpportunitiyProperties.totalValue + findDayOpportunity.totalValue
-          dayOpportunitiy = makeDayOpportunity(dayOpportunitiyProperties)
-          await DayOpportunityRepository.updateById(
-            findDayOpportunity._id,
-            {
-              opportunities: [...findDayOpportunity.opportunities, dayOpportunitiy.getOpportunityId()],
-              totalValue: dayOpportunitiy.getTotalValue()
-            }
-          )
-        } else {
-          dayOpportunitiy = makeDayOpportunity(dayOpportunitiyProperties)
-          await DayOpportunityRepository.create({
-            opportunities: dayOpportunitiy.getOpportunityId(),
-            date: dayOpportunitiy.getDate(),
-            totalValue: dayOpportunitiy.getTotalValue()
-          })
-        }
-
-        const encodedXml = opportunityToBlingXmlEncoded(opportunity)
+        const encodedXml = opportunityToXmlEncoded(opportunity)
         await BlingProvider.createOrder(encodedXml)
       }
+      if (addedOpportunities.length === 0) addedOpportunities = null
       return { success: true, data: addedOpportunities }
     } catch (error) {
       console.error(error)
-      return { success: false, error }
+      return {
+        success: false,
+        error: {
+          message: error.message,
+          stack: error
+        }
+      }
+    }
+  }
+
+  async function addOrUpdateDayOpportunity(addedOpportunity) {
+    const dayOpportunityProperties = {
+      opportunityId: addedOpportunity._id.toString(),
+      date: new Date(addedOpportunity.date),
+      totalValue:
+        addedOpportunity.itens[0].unitaryValue * addedOpportunity.itens[0].quantity // TODO: add multiple itens support
+    }
+
+    const findDayOpportunities = await DayOpportunityRepository.findByDay(new Date(addedOpportunity.date))
+    const findDayOpportunity = findDayOpportunities[0]
+
+    if (findDayOpportunity) {
+      dayOpportunityProperties.totalValue = dayOpportunityProperties.totalValue + findDayOpportunity.totalValue
+      const dayOpportunitiy = makeDayOpportunity(dayOpportunityProperties)
+      await DayOpportunityRepository.updateById(
+        findDayOpportunity._id,
+        {
+          opportunities: [...findDayOpportunity.opportunities, dayOpportunitiy.getOpportunityId()],
+          totalValue: dayOpportunitiy.getTotalValue()
+        }
+      )
+    } else {
+      const dayOpportunitiy = makeDayOpportunity(dayOpportunityProperties)
+      await DayOpportunityRepository.create({
+        opportunities: dayOpportunitiy.getOpportunityId(),
+        date: dayOpportunitiy.getDate(),
+        totalValue: dayOpportunitiy.getTotalValue()
+      })
     }
   }
 
@@ -79,7 +91,7 @@ export default function makeCreateOpportunity({ OpportunityRepository, DayOpport
     return opportunity
   }
 
-  function opportunityToBlingXmlEncoded(opportunity) {
+  function opportunityToXmlEncoded(opportunity) {
     const client = opportunity.getClient()
     const itens = opportunity.getItens()
 
