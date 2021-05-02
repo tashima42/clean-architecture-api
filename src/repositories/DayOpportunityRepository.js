@@ -5,6 +5,7 @@ export default function buildDayOpportunityRepository({ DayOpportunityDocument, 
     findById,
     findByProperties,
     findByDay,
+    findByDayPopulate,
     updateById,
   })
   async function create({ ...data }) {
@@ -33,6 +34,15 @@ export default function buildDayOpportunityRepository({ DayOpportunityDocument, 
   async function findByDay(day = new Date()) {
     const { start, end } = datesUtils.firstLastHourDay(day)
     const found = await DayOpportunityDocument.find({ date: { $gte: start, $lte: end } })
+    if (!found[0]) return null
+    return found
+  }
+
+  async function findByDayPopulate(day = new Date()) {
+    const { start, end } = datesUtils.firstLastHourDay(day)
+    const found = await DayOpportunityDocument
+      .find({ date: { $gte: start, $lte: end } })
+      .populate("opportunities")
     if (!found[0]) return null
     return found
   }
