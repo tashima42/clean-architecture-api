@@ -1,10 +1,10 @@
 export default function makeAddOpportunities({ createOpportunity }) {
   return async function addOpportunities(httpRequest) {
     try {
-      const wereAdded = await createOpportunity()
+      const added = await createOpportunity()
       return {
-        statusCode: wereAdded.success ? 200 : 400,
-        body: wereAdded
+        statusCode: added.success ? 200 : 400,
+        body: added
       }
     } catch (error) {
       console.error(error)
