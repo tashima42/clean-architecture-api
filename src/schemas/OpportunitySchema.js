@@ -2,6 +2,11 @@ import { Schema, model } from 'mongoose'
 
 const OpportunitySchema = new Schema(
   {
+    pipedriveId: {
+      type: String,
+      required: true,
+      unique: true
+    },
     client: {
       name: {
         type: String,
@@ -26,12 +31,10 @@ const OpportunitySchema = new Schema(
         required: true
       }
     }],
-    installments: [{
-      value: {
-        type: Number,
-        required: true
-      }
-    }]
+    date: {
+      type: Date,
+      required: true
+    }
   },
   { timestamps: true }
 )
