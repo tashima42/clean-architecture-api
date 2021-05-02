@@ -1,5 +1,11 @@
 export default function buildMakeOpportunity({ }) {
-  return function makeOpportunity({ client, itens, installments } = {}) {
+  return function makeOpportunity({ pipedriveId, client, itens, date } = {}) {
+    if (
+      !pipedriveId ||
+      typeof pipedriveId != "string"
+    ) {
+      throw new Error('Opportunity must have valid pipedriveId')
+    }
     if (
       !client.name ||
       typeof client.name != "string" ||
@@ -13,7 +19,6 @@ export default function buildMakeOpportunity({ }) {
     ) {
       throw new Error('Opportunity must have valid itens')
     }
-    let itensTotalValue = 0
     itens.forEach(item => {
       if (
         !item.description ||
@@ -41,33 +46,20 @@ export default function buildMakeOpportunity({ }) {
       ) {
         throw new Error('Item must have valid a code')
       }
-      itensTotalValue += item.quantity * item.unitaryValue
-    })
-    if (
-      !installments ||
-      !Array.isArray(installments)
-    ) {
-      throw new Error('Opportunity must have valid installments')
-    }
-    let installmentsTotalValue = 0
-    installments.forEach(installment => {
-      if (
-        !installment.value ||
-        typeof installment.value != "number"
-      ) {
-        throw new Error('Installment must have a value')
-      }
-      installmentsTotalValue += installment.value
     })
 
-    if (itensTotalValue != installmentsTotalValue) {
-      throw new Error('Opportunity must have valid totalPrice')
+    if (
+      !date ||
+      !(date instanceof Date)
+    ) {
+      throw new Error('date must be a valid Date')
     }
 
     return Object.freeze({
+      getPipedriveId: () => pipedriveId,
       getClient: () => client,
       getItens: () => itens,
-      getInstallments: () => installments,
+      getDate: () => date,
     })
   }
 }

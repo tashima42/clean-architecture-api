@@ -1,46 +1,30 @@
-export default function buildMakeDayOpportunity({ }) {
-  return function makeDayOpportunity({ opportunities, date, totalValue } = {}) {
+export default function buildMakeDayopportunity({ }) {
+  return function makeDayopportunity({ opportunityId, date, totalValue = 0 }) {
+    console.log(opportunityId, totalValue, date, typeof opportunityId)
     if (
-      !opportunities ||
-      !Array.isArray(opportunities)
+      !opportunityId ||
+      typeof opportunityId != "string"
     ) {
-      throw new Error('Day Opportunity must have valid opportuninities')
+      throw new Error('Day opportunities must have valid opportunityId')
     }
-    let opportunitiesTotalValue = 0
-    opportunities.forEach(opportunity => {
-      if (!sameDay(opportunity.date, date)) {
-        throw new Error('Opportunity must have a same date as Day Opportunity')
-      }
-      opportunity.installments(installment => {
-        opportunitiesTotalValue += installment.value
-      })
-    })
 
-    if (totalValue) {
-      if (typeof totalValue != "number") {
-        throw new Error('Day Opportunity must have valid totalValue')
-      }
-      totalValue = opportunitiesTotalValue - totalValue
-    } else {
-      totalValue = opportunitiesTotalValue
+    if (
+      typeof totalValue != "number"
+    ) {
+      throw new Error('Day opportunities must have valid totalValue')
     }
 
     if (
       !date ||
-      typeof date != "date"
+      !(date instanceof Date)
     ) {
-      throw new Error('Day Opportunity must have a valid date')
+      throw new Error('Day opportunities must have a valid date')
     }
+
     return Object.freeze({
-      getOpportunities: () => opportunities,
+      getOpportunityId: () => opportunityId,
       getDate: () => date,
       getTotalValue: () => totalValue,
     })
-  }
-
-  function sameDay(d1, d2) {
-    return d1.getFullYear() === d2.getFullYear() &&
-      d1.getMonth() === d2.getMonth() &&
-      d1.getDate() === d2.getDate()
   }
 }
