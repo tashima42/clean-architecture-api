@@ -2,43 +2,32 @@ import { makeOpportunity, makeDayOpportunity } from "../entities/index"
 
 export default function makeCreateOpportunity({ OpportunityRepository, DayOpportunityRepository, BlingProvider, PipedriveProvider, objectToXml }) {
   return async function createOpportunity() {
-    try {
-      const deals = await PipedriveProvider.getWonDeals()
-      let addedOpportunities = []
-      for (let i = 0; i < deals.length; i++) {
-        const deal = deals[i]
-        const opportunityInfo = dealToOpportunity(deal)
+    const deals = await PipedriveProvider.getWonDeals()
+    let addedOpportunities = []
+    for (let i = 0; i < deals.length; i++) {
+      const deal = deals[i]
+      const opportunityInfo = dealToOpportunity(deal)
 
-        const find = await OpportunityRepository.findByProperties({ pipedriveId: opportunityInfo.pipedriveId })
-        if (find) continue
+      const find = await OpportunityRepository.findByProperties({ pipedriveId: opportunityInfo.pipedriveId })
+      if (find) continue
 
-        const opportunity = makeOpportunity(opportunityInfo)
-        // TODO: implement transactions
-        const addedOpportunity = await OpportunityRepository.create({
-          pipedriveId: opportunity.getPipedriveId(),
-          client: opportunity.getClient(),
-          itens: opportunity.getItens(),
-          date: opportunity.getDate()
-        })
-        addedOpportunities.push(addedOpportunity)
+      const opportunity = makeOpportunity(opportunityInfo)
+      // TODO: implement transactions
+      const addedOpportunity = await OpportunityRepository.create({
+        pipedriveId: opportunity.getPipedriveId(),
+        client: opportunity.getClient(),
+        itens: opportunity.getItens(),
+        date: opportunity.getDate()
+      })
+      addedOpportunities.push(addedOpportunity)
 
-        await addOrUpdateDayOpportunity(addedOpportunity)
+      await addOrUpdateDayOpportunity(addedOpportunity)
 
-        const encodedXml = opportunityToXmlEncoded(opportunity)
-        await BlingProvider.createOrder(encodedXml)
-      }
-      if (addedOpportunities.length === 0) addedOpportunities = null
-      return { success: true, data: addedOpportunities }
-    } catch (error) {
-      console.error(error)
-      return {
-        success: false,
-        error: {
-          message: error.message,
-          stack: error
-        }
-      }
+      const encodedXml = opportunityToXmlEncoded(opportunity)
+      await BlingProvider.createOrder(encodedXml)
     }
+    if (addedOpportunities.length === 0) addedOpportunities = null
+    return { success: true, data: addedOpportunities }
   }
 
   async function addOrUpdateDayOpportunity(addedOpportunity) {

@@ -11,15 +11,10 @@ export default function buildPipedriveProvider({ issueHttpRequest }) {
       url: `/deals/?status=won&api_token=${apiKey}`,
       method: "get",
     }
-    try {
-      const response = await issueHttpRequest(options)
-      if (response.data.success != true) {
-        throw new Error({ error: response.data.error, errorCode: response.data.errorCode })
-      }
-      return response.data.data
-    } catch (error) {
-      console.error(error)
-      throw new Error(error)
+    const response = await issueHttpRequest(options)
+    if (response.data.success != true) {
+      throw new Error({ error: response.data.error, errorCode: response.data.errorCode })
     }
+    return response.data.data
   }
 }
