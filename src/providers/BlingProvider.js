@@ -30,9 +30,13 @@ export default function buildBlingProvider({ issueHttpRequest }) {
     }
     try {
       const response = await issueHttpRequest(options)
+      if (response.data.retorno.erros) {
+        throw new Error(response.data.retorno.erros)
+      }
       return response.data
     } catch (error) {
-      console.error(error.response)
+      console.error(error)
+      throw new Error(error)
     }
   }
 }
