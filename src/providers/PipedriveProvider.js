@@ -13,7 +13,7 @@ export default function buildPipedriveProvider({ issueHttpRequest }) {
     }
     try {
       const response = await issueHttpRequest(options)
-      if (response.data.sucess != true) {
+      if (response.data.success != true) {
         throw new Error({ error: response.data.error, errorCode: response.data.errorCode })
       }
       return response.data

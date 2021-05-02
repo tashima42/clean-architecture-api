@@ -36,7 +36,7 @@ export default function buildBlingProvider({ issueHttpRequest }) {
       return response.data
     } catch (error) {
       console.error(error)
-      throw new Error(error)
+      throw new Error(error.message)
     }
   }
 }

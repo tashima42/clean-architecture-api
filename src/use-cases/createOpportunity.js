@@ -53,10 +53,10 @@ export default function makeCreateOpportunity({ OpportunityRepository, DayOpport
         const encodedXml = opportunityToBlingXmlEncoded(opportunity)
         await BlingProvider.createOrder(encodedXml)
       }
-      return addedOpportunities
+      return { success: true, data: addedOpportunities }
     } catch (error) {
       console.error(error)
-      throw new Error(error)
+      return { success: false, error }
     }
   }
 
