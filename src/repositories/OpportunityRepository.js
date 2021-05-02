@@ -3,6 +3,7 @@ export default function buildOpportunityRepository({ OpportunityDocument }) {
     create,
     findAll,
     findById,
+    findByProperties,
   })
   async function create({ ...info }) {
     const created = OpportunityDocument.create({ ...info })
@@ -18,6 +19,12 @@ export default function buildOpportunityRepository({ OpportunityDocument }) {
     const rawFound = await OpportunityDocument.find({ _id: id })
     const found = rawFound[0]
     if (!found._id) return null
+    return found
+  }
+
+  async function findByProperties({ ...properties }) {
+    const found = await OpportunityDocument.find({ ...properties })
+    if (!found[0]) return null
     return found
   }
 }

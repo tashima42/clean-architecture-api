@@ -1,5 +1,8 @@
 import mongoose from "mongoose"
 
+import buildDatesUtils from "../utils/dates"
+const datesUtils = buildDatesUtils()
+
 import { OpportunityDocument } from "../schemas/OpportunitySchema"
 import { DayOpportunityDocument } from "../schemas/DayOpportunitySchema"
 
@@ -22,7 +25,7 @@ async function connectDb() {
 }
 
 const OpportunityRepository = buildOpportunityRepository({ OpportunityDocument })
-const DayOpportunityRepository = buildDayOpportunityRepository({ DayOpportunityDocument })
+const DayOpportunityRepository = buildDayOpportunityRepository({ DayOpportunityDocument, datesUtils })
 
 export {
   connectDb,
