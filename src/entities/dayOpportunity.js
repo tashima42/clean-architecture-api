@@ -14,7 +14,8 @@ export default function buildMakeDayopportunity({ datesUtils }) {
     }
 
     if (
-      !date 
+      !date ||
+      !(datesUtils.isValidISODate(date))
     ) {
       throw new Error('Day opportunities must have a valid date')
     }
