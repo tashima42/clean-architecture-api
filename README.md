@@ -10,5 +10,6 @@
 
 **Testando localmente**
 
+1. Rode testes com `npm run test`
 1. Crie um arquivo de ambiente baseado no `.example` em `/collections`
-1. Importe as collections e o ambiente em um cliente com *Postman* ou *Thunder*
+1. Importe as collections e o ambiente em um cliente com _Postman_ ou _Thunder_
