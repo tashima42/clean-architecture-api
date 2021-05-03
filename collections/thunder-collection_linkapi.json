@@ -1,0 +1,112 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "linkapi",
+  "dateExported": "2021-05-03T16:21:32.398Z",
+  "version": "1.1",
+  "folders": [
+    {
+      "containerId": "",
+      "sortNum": 20000,
+      "name": "pipedrive",
+      "_id": "8badc9ef-9a5e-49c3-8dc6-05719311db00",
+      "created": "2021-05-03T16:18:24.270Z"
+    },
+    {
+      "containerId": "",
+      "sortNum": 30000,
+      "name": "bling",
+      "_id": "eac06545-7a29-433d-95a5-a45692fc3dc0",
+      "created": "2021-05-03T16:18:30.876Z"
+    }
+  ],
+  "requests": [
+    {
+      "containerId": "",
+      "sortNum": 10000,
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "*/*"
+        },
+        {
+          "name": "User-Agent",
+          "value": "Thunder Client (https://www.thunderclient.io)"
+        }
+      ],
+      "colId": "6f34bb02-f26d-4598-b7a5-d0e943c17508",
+      "name": "list opportunities by day",
+      "url": "{{baseUrlApp}}/opportunities/day?date=2021-05-03T14:35:28+0000",
+      "method": "GET",
+      "modified": "2021-05-03T16:20:54.097Z",
+      "created": "2021-05-02T20:42:36.854Z",
+      "_id": "06a9b54c-da38-4037-925f-802ef09415e7",
+      "tests": []
+    },
+    {
+      "containerId": "8badc9ef-9a5e-49c3-8dc6-05719311db00",
+      "sortNum": 10000,
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "*/*"
+        },
+        {
+          "name": "User-Agent",
+          "value": "Thunder Client (https://www.thunderclient.io)"
+        }
+      ],
+      "colId": "6f34bb02-f26d-4598-b7a5-d0e943c17508",
+      "name": "deals",
+      "url": "{{baseUrlPipe}}/deals?api_token={{apikeyPipe}}&status=won",
+      "method": "GET",
+      "modified": "2021-05-03T16:18:38.054Z",
+      "created": "2021-04-30T01:30:49.489Z",
+      "_id": "1d096802-ff2b-4155-8de9-b0f450d9b711",
+      "tests": []
+    },
+    {
+      "containerId": "",
+      "sortNum": 10000,
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "*/*"
+        },
+        {
+          "name": "User-Agent",
+          "value": "Thunder Client (https://www.thunderclient.io)"
+        }
+      ],
+      "colId": "6f34bb02-f26d-4598-b7a5-d0e943c17508",
+      "name": "execute integrations",
+      "url": "{{baseUrlApp}}/opportunities/integrations",
+      "method": "POST",
+      "modified": "2021-05-03T16:20:15.408Z",
+      "created": "2021-04-30T02:07:23.955Z",
+      "_id": "3705be99-d5e8-428a-97f0-cf215162e95c",
+      "tests": []
+    },
+    {
+      "containerId": "eac06545-7a29-433d-95a5-a45692fc3dc0",
+      "sortNum": 10000,
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "*/*"
+        },
+        {
+          "name": "User-Agent",
+          "value": "Thunder Client (https://www.thunderclient.io)"
+        }
+      ],
+      "colId": "6f34bb02-f26d-4598-b7a5-d0e943c17508",
+      "name": "criar pedido",
+      "url": "{{baseUrlBling}}/pedido/json/?apikey={{apikeyBling}}&xml=%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Cpedido1%3E%3Ccliente%3E%3Cnome%3EPedro%20Tashima%3C%2Fnome%3E%3C%2Fcliente%3E%3Citens%3E%3Citem%3E%3Cdescricao%3EMarcador%20de%20texto%3C%2Fdescricao%3E%3Cqtde%3E1%3C%2Fqtde%3E%3Cvlr_unit%3E89010.01%3C%2Fvlr_unit%3E%3Ccodigo%3E13871313%3C%2Fcodigo%3E%3C%2Fitem%3E%3C%2Fitens%3E%3C%2Fpedido%3E",
+      "method": "POST",
+      "modified": "2021-05-03T16:18:35.712Z",
+      "created": "2021-05-01T01:44:21.640Z",
+      "_id": "cc686610-c5bc-4c0d-9a67-7d145c99eae5",
+      "tests": []
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "client": "Thunder Client",
+  "environmentName": "linkapi-teste",
+  "dateExported": "2021-05-03T16:22:02.421Z",
+  "version": "1.0",
+  "variables": [
+    {
+      "name": "apikeyBling",
+      "value": "API_KEY_BLING"
+    },
+    {
+      "name": "baseUrlBling",
+      "value": "https://bling.com.br/Api/v2/"
+    },
+    {
+      "name": "apikeyPipe",
+      "value": "API_KEY_PIPE"
+    },
+    {
+      "name": "baseUrlPipe",
+      "value": "https://SUAURL.pipedrive.com/api/v1"
+    },
+    {
+      "name": "baseUrlApp",
+      "value": "http://localhost:3000"
+    }
+  ]
+}
