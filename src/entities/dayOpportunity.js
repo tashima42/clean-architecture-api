@@ -1,4 +1,4 @@
-export default function buildMakeDayopportunity({ }) {
+export default function buildMakeDayopportunity({ datesUtils }) {
   return function makeDayopportunity({ opportunityId, date, totalValue = 0 }) {
     if (
       !opportunityId ||
@@ -14,8 +14,7 @@ export default function buildMakeDayopportunity({ }) {
     }
 
     if (
-      !date ||
-      !(date instanceof Date)
+      !date 
     ) {
       throw new Error('Day opportunities must have a valid date')
     }

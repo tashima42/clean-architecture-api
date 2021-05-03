@@ -9,7 +9,7 @@ const DayOpportunitySchema = new Schema(
       default: []
     },
     date: {
-      type: Date,
+      type: String,
       required: true
     },
     totalValue: {

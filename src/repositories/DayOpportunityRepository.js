@@ -10,14 +10,14 @@ export default function buildDayOpportunityRepository({ DayOpportunityDocument, 
     return created
   }
 
-  async function findByDay(day = new Date()) {
+  async function findByDay(day = datesUtils.newDate()) {
     const { start, end } = datesUtils.firstLastHourDay(day)
     const found = await DayOpportunityDocument.find({ date: { $gte: start, $lte: end } })
     if (!found[0]) return null
     return found
   }
 
-  async function findByDayPopulate(day = new Date()) {
+  async function findByDayPopulate(day = datesUtils.newDate()) {
     const { start, end } = datesUtils.firstLastHourDay(day)
     const found = await DayOpportunityDocument
       .find({ date: { $gte: start, $lte: end } })

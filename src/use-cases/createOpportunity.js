@@ -1,6 +1,13 @@
 import { makeOpportunity, makeDayOpportunity } from "../entities/index"
 
-export default function makeCreateOpportunity({ OpportunityRepository, DayOpportunityRepository, BlingProvider, PipedriveProvider, objectToXml }) {
+export default function makeCreateOpportunity({
+  OpportunityRepository,
+  DayOpportunityRepository,
+  BlingProvider,
+  PipedriveProvider,
+  objectToXml,
+  datesUtils
+}) {
   return async function createOpportunity() {
     const deals = await PipedriveProvider.getWonDeals()
     let addedOpportunities = []
@@ -33,12 +40,12 @@ export default function makeCreateOpportunity({ OpportunityRepository, DayOpport
   async function addOrUpdateDayOpportunity(addedOpportunity) {
     const dayOpportunityProperties = {
       opportunityId: addedOpportunity._id.toString(),
-      date: new Date(addedOpportunity.date),
+      date: addedOpportunity.date,
       totalValue:
         addedOpportunity.itens[0].unitaryValue * addedOpportunity.itens[0].quantity // TODO: add multiple itens support
     }
 
-    const findDayOpportunities = await DayOpportunityRepository.findByDay(new Date(addedOpportunity.date))
+    const findDayOpportunities = await DayOpportunityRepository.findByDay(addedOpportunity.date)
 
     if (findDayOpportunities) {
       const findDayOpportunity = findDayOpportunities[0]
@@ -75,7 +82,7 @@ export default function makeCreateOpportunity({ OpportunityRepository, DayOpport
           code: "123456"
         },
       ],
-      date: new Date(deal.won_time)
+      date: datesUtils.parseSQL(deal.won_time)
     }
     return opportunity
   }

@@ -32,7 +32,7 @@ const OpportunitySchema = new Schema(
       }
     }],
     date: {
-      type: Date,
+      type: String,
       required: true
     }
   },

@@ -1,7 +1,10 @@
-export default function makeListDayOpportunities({ getOpportunitiesByDay }) {
+export default function makeListDayOpportunities({ getOpportunitiesByDay, datesUtils }) {
   return async function listDayOpportunities(httpRequest) {
     try {
-      const date = new Date(httpRequest.query.date)
+      const date = httpRequest.query.date
+      if (!datesUtils.isValidISODate(date)) {
+        throw new Error("Invalid date, please use ISO 8601 format")
+      }
       const dayOpportunities = await getOpportunitiesByDay(date)
       return {
         statusCode: dayOpportunities.success ? 200 : 400,

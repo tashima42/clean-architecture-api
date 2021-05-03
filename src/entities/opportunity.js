@@ -1,4 +1,4 @@
-export default function buildMakeOpportunity({ }) {
+export default function buildMakeOpportunity({ datesUtils }) {
   return function makeOpportunity({ pipedriveId, client, itens, date } = {}) {
     if (
       !pipedriveId ||
@@ -50,7 +50,7 @@ export default function buildMakeOpportunity({ }) {
 
     if (
       !date ||
-      !(date instanceof Date)
+      !(datesUtils.isValidISODate(date))
     ) {
       throw new Error('date must be a valid Date')
     }
