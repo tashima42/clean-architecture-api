@@ -39,9 +39,9 @@ export default function makeCreateOpportunity({ OpportunityRepository, DayOpport
     }
 
     const findDayOpportunities = await DayOpportunityRepository.findByDay(new Date(addedOpportunity.date))
-    const findDayOpportunity = findDayOpportunities[0]
 
-    if (findDayOpportunity) {
+    if (findDayOpportunities) {
+      const findDayOpportunity = findDayOpportunities[0]
       dayOpportunityProperties.totalValue = dayOpportunityProperties.totalValue + findDayOpportunity.totalValue
       const dayOpportunitiy = makeDayOpportunity(dayOpportunityProperties)
       await DayOpportunityRepository.updateById(
