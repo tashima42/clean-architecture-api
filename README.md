@@ -1,7 +1,15 @@
 
+
 # Clean architecture concept API
 Essa API é uma aplicação do conceito da [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html), o objetivo dela é integrar integrar dois serviços, o CRM [Pipedrive](https://www.pipedrive.com/pt) e o ERP [Bling](https://www.bling.com.br/) quando um deal é marcado como ganho no Pipedrive, ele deve ser salvo em um banco de dados e enviado para o Bling como um pedido. Todos os deals salvos no banco podem ser consultados.
-![Clean Architecture](https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg) 
+![Clean Architecture](https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg)
+Esse projeto segue esses 5 princípios: 
+1. Independente de Frameworks. Não depende da existência de uma biblioteca ou software. Isso permite o uso de frameworks como ferramentas, ao invés de limitações
+2. Testável. As regras de negócio podem ser testadas sem a UI, Banco de dados, Web Server ou qualquer outro elemento. 
+3. Independende da UI. A UI pode ser facilmente alterada, sem mudar nada do restante do sistema. Uma UI Web HTTP pode ser trocada por uma Console UI sem alterar nenhuma das regras de negócio. 
+4. Independente de um Banco de dados. O Banco de dados pode ser alterado sem problemas, seja ele Oracle, SQL Server, Mongo, etc. As regras de negócio não estão ligadas ao Banco de Dados. 
+5. Independente de agentes externos. As regras de negócio não conhecem nada sobre o mundo externo. 
+
 ## Camadas
 A Clean Architecture tem uma opinião muito forte sobre a separação entre camadas. Uma camada só pode depender de outra mais interna que ela. Isso não quer dizer que elas não podem interagir, elas devem fazer isso, mas uma camada mais interna que outra não precisa nem deve conhecer nada sobre a implementação de uma camada mais externa. Por exemplo, um **Use Case** pode usar um banco de dados, que está na camada mais externa da arquitetura, porém ele jamais pode depender de um banco de dados específico, como o MongoDB, ou o PostgresSQL, o **Use Case** sabe que está chamando um método que vai persistir dados, mas ele não pode saber onde ou como esses dados estão sendo salvos.  
 ### Entidades (Enterprise Business Rules)
