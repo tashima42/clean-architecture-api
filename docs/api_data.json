@@ -1,0 +1,75 @@
+[
+  {
+    "type": "get",
+    "url": "/opportunities/day",
+    "title": "",
+    "name": "DayOpportunities",
+    "group": "Opportunities",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "date",
+            "description": "<p>Day to retrieve integrated opportunities</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>If true, the operation was a success</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "dayOpportunities",
+            "description": "<p>Opportunities integrated on the query day</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "src/app.js",
+    "groupTitle": "Opportunities"
+  },
+  {
+    "type": "post",
+    "url": "/opportunities/integrations",
+    "title": "",
+    "name": "IntegrateOpportunities",
+    "group": "Opportunities",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>If true, the operation was a success</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "addedOpportunities",
+            "description": "<p>Integrated opportunities</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "src/app.js",
+    "groupTitle": "Opportunities"
+  }
+]

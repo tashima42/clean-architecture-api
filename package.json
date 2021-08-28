@@ -1,26 +1,28 @@
 {
-  "name": "linkapi-teste",
+  "name": "clean-architecture-api",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon --exec babel-node src/server.js",
-    "build": "babel src -d dist",
+    "docs": "apidoc -i src/ -o docs/",
+    "build": "babel src -d dist && docs",
     "test": "npm run test:unit",
     "test:unit": "NODE_ENV=test mocha --require @babel/register test/unit/**/*.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tashima42/linkapi-teste.git"
+    "url": "git+https://github.com/Tashima42/clean-architecture-api.git"
   },
   "author": "tashima42",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Tashima42/linkapi-teste/issues"
+    "url": "https://github.com/Tashima42/clean-architecture-api/issues"
   },
-  "homepage": "https://github.com/Tashima42/linkapi-teste#readme",
+  "homepage": "https://github.com/Tashima42/clean-architecture-api#readme",
   "dependencies": {
     "@babel/core": "^7.14.0",
+    "apidoc": "^0.29.0",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "koa": "^2.13.1",
@@ -48,5 +50,7 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "apidoc": {
   }
 }
